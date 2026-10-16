@@ -1,0 +1,21 @@
+{
+  "type": "table",
+  "data": [
+    {
+      "Name": "Keshav",
+      "Designation": "Founder"
+    }
+  ],
+  "columns": [
+    {
+      "columnName": "Name",
+      "width": "150px"
+    },
+    {
+      "columnName": "Designation",
+      "width": "100px"
+    }
+  ],
+  "options": {},
+  "showLog": false
+}

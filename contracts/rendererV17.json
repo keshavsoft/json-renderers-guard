@@ -1,0 +1,26 @@
+{
+  "description": "Input checks for json-renderers V17.",
+  "requiredKeys": [
+    "type",
+    "targetHtmlId",
+    "data",
+    "columns",
+    "classToApply",
+    "appendPosition",
+    "showLog"
+  ],
+  "types": {
+    "type": "string",
+    "targetHtmlId": "string",
+    "data": "array",
+    "columns": "array",
+    "classToApply": "string",
+    "appendPosition": "string",
+    "showLog": "boolean"
+  },
+  "rules": [
+    "all required keys must be present",
+    "each key must match its declared type",
+    "targetHtmlId must not be empty or whitespace-only"
+  ]
+}

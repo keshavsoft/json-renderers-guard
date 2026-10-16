@@ -1,0 +1,18 @@
+{
+  "rendererBuildV19": {
+    "type": "table",
+    "data": [],
+    "columns": [],
+    "options": {},
+    "showLog": false
+  },
+  "rendererV17": {
+    "type": "table",
+    "targetHtmlId": "",
+    "data": [],
+    "columns": [],
+    "classToApply": "",
+    "appendPosition": "replace",
+    "showLog": false
+  }
+}

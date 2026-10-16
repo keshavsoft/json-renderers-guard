@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Table examples — GUARD</title><style>body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}</style></head><body><header><p><a href="../index.html">json-renderers-guard</a></p><h1>Table examples</h1><p>Examples show the input contract in a concrete, reusable form.</p><nav><a href="../index.html">Overview</a><a href="../contracts/columns.html">Column contract</a><a href="../validation/rules.html">Validation rules</a><a href="../examples/table.html">Examples</a><a href="../consumers/migration.html">Consumer migration</a></nav></header>
+<h2>Valid table input</h2><pre>{
+  "type": "table",
+  "data": [{ "Name": "Keshav", "Designation": "Founder" }],
+  "columns": [
+    { "columnName": "Name", "width": "150px" },
+    { "columnName": "Designation", "width": "100px" }
+  ],
+  "options": {},
+  "showLog": false
+}</pre><p>Both column names appear in the data object. Width is supplied as optional table presentation information.</p><h2>Invalid table input</h2><pre>{
+  "type": "table",
+  "data": [{ "Name": "Keshav" }],
+  "columns": [{ "columnName": "MissingField", "width": "100px" }],
+  "options": {},
+  "showLog": false
+}</pre><p>The declared column does not match any key in the first data row, so the current alignment check rejects it.</p><h2>Test command</h2><pre>npm test</pre></body></html>

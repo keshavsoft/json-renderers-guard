@@ -1,0 +1,16 @@
+{
+  "type": "table",
+  "data": [
+    {
+      "Name": "Keshav"
+    }
+  ],
+  "columns": [
+    {
+      "columnName": "MissingField",
+      "width": "100px"
+    }
+  ],
+  "options": {},
+  "showLog": false
+}
