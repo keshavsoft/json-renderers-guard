@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inspect Spec with NPX — GUARD</title>
+  <style>
+    body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}
+    h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}
+    pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}
+    th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}
+    nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <p><a href="../index.html">json-renderers-guard</a> / <a href="index.html">npx</a></p>
+    <h1>Inspect Specification with NPX</h1>
+    <p>Output the raw schema object or pipe it into tools like <code>jq</code>, build scripts, or backend generators.</p>
+    <nav>
+      <a href="../index.html">Overview</a>
+      <a href="index.html">CLI Overview</a>
+      <a href="generate.html">Generate Template</a>
+      <a href="validate.html">Validate File</a>
+      <a href="spec.html"><strong>Inspect Spec</strong></a>
+    </nav>
+  </header>
+
+  <h2>Inspect Command</h2>
+  <pre><code>npx json-renderers-guard --spec</code></pre>
+
+  <h2>Piping to jq</h2>
+  <p>Filter specific fields directly in your shell:</p>
+  <pre><code># Extract allowed properties
+npx json-renderers-guard --spec | jq 'keys'
+
+# Extract default table type
+npx json-renderers-guard --spec | jq '.type'</code></pre>
+
+  <h2>Use in Shell &amp; Build Scripts</h2>
+  <p>Fetch the latest schema dynamically into any toolchain without npm installing:</p>
+  <pre><code>SPEC=$(npx json-renderers-guard --spec)
+echo "Fetched spec: $SPEC"</code></pre>
+</body>
+</html>

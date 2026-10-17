@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NPX CLI Usage — GUARD</title>
+  <style>
+    body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}
+    h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}
+    pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}
+    th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}
+    nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <p><a href="../index.html">json-renderers-guard</a></p>
+    <h1>NPX Command Line Interface</h1>
+    <p>Run GUARD directly from your terminal with zero install to get templates, inspect specs, and validate files.</p>
+    <nav>
+      <a href="../index.html">Overview</a>
+      <a href="../contracts/columns.html">Column contract</a>
+      <a href="../validation/rules.html">Validation rules</a>
+      <a href="../examples/table.html">Examples</a>
+      <a href="../consumers/migration.html">Consumer migration</a>
+      <a href="index.html"><strong>NPX CLI</strong></a>
+    </nav>
+  </header>
+
+  <h2>Quick Commands</h2>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>npx json-renderers-guard</code></td><td>Outputs the canonical JSON configuration template to stdout.</td></tr>
+      <tr><td><code>npx json-renderers-guard &gt; config.json</code></td><td>Creates a fresh, valid config file in your current folder.</td></tr>
+      <tr><td><code>npx json-renderers-guard validate &lt;file&gt;</code></td><td>Validates a JSON configuration file against GUARD rules.</td></tr>
+      <tr><td><code>npx json-renderers-guard --spec</code></td><td>Outputs the raw schema specification object.</td></tr>
+      <tr><td><code>npx json-renderers-guard --help</code></td><td>Displays usage instructions and available options.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Guides</h2>
+  <ul>
+    <li><a href="generate.html">Generating starter configuration templates</a></li>
+    <li><a href="validate.html">Validating configuration files in CI/CD and CLI</a></li>
+    <li><a href="spec.html">Inspecting specification and piping to tools</a></li>
+  </ul>
+</body>
+</html>

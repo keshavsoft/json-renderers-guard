@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generate Config with NPX — GUARD</title>
+  <style>
+    body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}
+    h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}
+    pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}
+    th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}
+    nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <p><a href="../index.html">json-renderers-guard</a> / <a href="index.html">npx</a></p>
+    <h1>Generate Starter Config Template</h1>
+    <p>Instantly scaffold a clean, valid JSON configuration for any renderer project without installing dependencies.</p>
+    <nav>
+      <a href="../index.html">Overview</a>
+      <a href="index.html">CLI Overview</a>
+      <a href="generate.html"><strong>Generate Template</strong></a>
+      <a href="validate.html">Validate File</a>
+      <a href="spec.html">Inspect Spec</a>
+    </nav>
+  </header>
+
+  <h2>How to Generate</h2>
+  <p>Run the package with <code>npx</code> and redirect standard output to your desired JSON file:</p>
+  <pre><code>npx json-renderers-guard > config.json</code></pre>
+
+  <h2>Generated Output Structure</h2>
+  <p>The command outputs the canonical configuration structure with sensible defaults:</p>
+  <pre><code>{
+  "type": "table",
+  "targetHtmlId": "",
+  "data": [],
+  "columns": [],
+  "classToApply": "",
+  "appendPosition": "replace",
+  "showLog": false
+}</code></pre>
+
+  <h2>Next Steps</h2>
+  <ol>
+    <li>Open <code>config.json</code> and fill in your <code>targetHtmlId</code>, <code>columns</code>, and <code>data</code>.</li>
+    <li>Validate your file using <code>npx json-renderers-guard validate config.json</code>.</li>
+  </ol>
+</body>
+</html>
