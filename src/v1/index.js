@@ -1,6 +1,6 @@
 import contractSpecs from "./contracts.json" with { type: "json" };
 
-const VALID_TYPES = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist"];
+const VALID_TYPES = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist", "searchInput", "search", "inputRow", "form"];
 const TABLE_TYPES = ["table", "tableFromSpec"];
 
 function guardFunc({ inConfig, contractName = "rendererBuildV19" } = {}) {
@@ -56,6 +56,21 @@ function guardFunc({ inConfig, contractName = "rendererBuildV19" } = {}) {
             const rowKeys = Object.keys(localConfig.data[0]);
             if (!names.some(name => rowKeys.includes(name))) {
                 throw new Error(`Data alignment error: None of the columns [${names.join(", ")}] match any keys in data rows [${rowKeys.join(", ")}]`);
+            }
+        }
+    }
+
+    if (localConfig.type === "form") {
+        if (!Array.isArray(localConfig.columns)) {
+            throw new TypeError("columns must be an array for form rendering");
+        }
+        for (let i = 0; i < localConfig.columns.length; i++) {
+            const col = localConfig.columns[i];
+            if (!col || typeof col !== "object" || Array.isArray(col)) {
+                throw new TypeError(`columns[${i}] must be an object`);
+            }
+            if (typeof col.columnName !== "string" || !col.columnName.trim()) {
+                throw new TypeError(`columns[${i}].columnName must be a non-empty string`);
             }
         }
     }

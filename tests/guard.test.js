@@ -37,3 +37,12 @@ test("rejects empty targetHtmlId", () => {
         classToApply: "", appendPosition: "replace", showLog: false
     }}), /targetHtmlId must be a non-empty string/);
 });
+
+test("accepts valid form build input", () => {
+    assert.equal(guardFunc({ inConfig: {
+        type: "form",
+        data: [],
+        columns: [{ columnName: "Name" }]
+    }, contractName: "rendererBuildV19" }), true);
+});
+
