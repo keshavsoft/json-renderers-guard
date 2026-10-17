@@ -90,3 +90,12 @@ test("Guard Spec: exports getSpec function and configSpec object", () => {
     assert.equal(configSpec.type, "table");
     assert.equal(guardFunc.getSpec().type, "table");
 });
+
+test("accepts valid form build input", () => {
+    assert.equal(guardFunc({ inConfig: {
+        type: "form",
+        data: [],
+        columns: [{ columnName: "Name" }]
+    }, contractName: "rendererBuildV19" }), true);
+});
+
