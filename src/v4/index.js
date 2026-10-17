@@ -14,13 +14,13 @@ const guardFunc = (config) => {
         throw new TypeError("Config must be an object");
     }
 
-    validateType({ inConfig: localConfig });
-    validateTargetHtmlId({ inConfig: localConfig });
-    validateData({ inConfig: localConfig });
-    validateColumns({ inConfig: localConfig });
-    validateClassToApply({ inConfig: localConfig });
-    validateAppendPosition({ inConfig: localConfig });
-    validateShowLog({ inConfig: localConfig });
+    validateType(localConfig);
+    validateTargetHtmlId(localConfig);
+    validateData(localConfig);
+    validateColumns(localConfig);
+    validateClassToApply(localConfig);
+    validateAppendPosition(localConfig);
+    validateShowLog(localConfig);
 
     return true;
 };
