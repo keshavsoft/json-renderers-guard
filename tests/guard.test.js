@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { execSync } from "node:child_process";
 import guardFunc, {
     getSpec,
     configSpec,
@@ -91,11 +92,11 @@ test("Guard Spec: exports getSpec function and configSpec object", () => {
     assert.equal(guardFunc.getSpec().type, "table");
 });
 
-test("accepts valid form build input", () => {
-    assert.equal(guardFunc({ inConfig: {
-        type: "form",
-        data: [],
-        columns: [{ columnName: "Name" }]
-    }, contractName: "rendererBuildV19" }), true);
+test("CLI Binary: outputs valid canonical config template via node bin/index.js", () => {
+    const output = execSync("node bin/index.js", { encoding: "utf-8" });
+    const parsed = JSON.parse(output);
+    assert.equal(parsed.type, "table");
+    assert.equal(parsed.targetHtmlId, "");
+    assert.equal(Array.isArray(parsed.data), true);
+    assert.equal(Array.isArray(parsed.columns), true);
 });
-

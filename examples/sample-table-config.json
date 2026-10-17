@@ -1,0 +1,21 @@
+{
+  "type": "table",
+  "targetHtmlId": "myTable",
+  "data": [
+    {
+      "id": 1,
+      "name": "Item 1"
+    }
+  ],
+  "columns": [
+    {
+      "columnName": "id"
+    },
+    {
+      "columnName": "name"
+    }
+  ],
+  "classToApply": "table table-bordered",
+  "appendPosition": "replace",
+  "showLog": false
+}
