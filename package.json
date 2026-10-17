@@ -1,6 +1,6 @@
 {
   "name": "json-renderers-guard",
-  "version": "1.4.2",
+  "version": "1.5.1",
   "description": "Shared input contracts and validation for JSON renderer packages",
   "type": "module",
   "main": "./src/index.js",

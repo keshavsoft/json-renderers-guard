@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { execSync } from "node:child_process";
 import guardFunc, {
+    guardSpec,
+    guardMount,
     getSpec,
     configSpec,
     validateType,
@@ -99,4 +101,29 @@ test("CLI Binary: outputs valid canonical config template via node bin/index.js"
     assert.equal(parsed.targetHtmlId, "");
     assert.equal(Array.isArray(parsed.data), true);
     assert.equal(Array.isArray(parsed.columns), true);
+});
+
+test("Direct config parameter: guardFunc accepts config directly without inConfig wrapper", () => {
+    assert.equal(guardFunc(validRendererConfig), true);
+});
+
+test("Modular Spec Guard: guardSpec accepts spec config without targetHtmlId", () => {
+    const specOnlyConfig = {
+        type: "table",
+        data: [{ Name: "Keshav" }],
+        columns: [{ columnName: "Name" }],
+        showLog: false
+    };
+    assert.equal(guardSpec(specOnlyConfig), true);
+    assert.equal(guardSpec({ inConfig: specOnlyConfig }), true);
+});
+
+test("Modular Mount Guard: guardMount accepts mount config without data or columns", () => {
+    const mountOnlyConfig = {
+        targetHtmlId: "appContainer",
+        appendPosition: "replace",
+        classToApply: "table"
+    };
+    assert.equal(guardMount(mountOnlyConfig), true);
+    assert.equal(guardMount({ inConfig: mountOnlyConfig }), true);
 });
