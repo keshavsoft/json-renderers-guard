@@ -76,8 +76,8 @@ test("Autonomous Validator: validateColumns throws on missing key or non-array",
     assert.throws(() => validateColumns({ inConfig: { columns: 123 } }), /columns must be an Array/);
 });
 
-test("Autonomous Validator: validateShowLog throws on missing key or non-boolean", () => {
-    assert.throws(() => validateShowLog({ inConfig: {} }), /Missing compulsory key: "showLog"/);
+test("Autonomous Validator: validateShowLog throws on non-boolean and allows undefined", () => {
+    assert.equal(validateShowLog({ inConfig: {} }), true);
     assert.throws(() => validateShowLog({ inConfig: { showLog: "false" } }), /showLog must be a boolean/);
 });
 

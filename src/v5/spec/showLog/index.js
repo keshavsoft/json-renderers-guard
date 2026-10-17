@@ -7,11 +7,7 @@ const validateShowLog = (config) => {
 
     const localShowLog = localConfig.showLog;
 
-    if (localShowLog === undefined) {
-        throw new Error('Missing compulsory key: "showLog"');
-    }
-
-    if (typeof localShowLog !== "boolean") {
+    if (localShowLog !== undefined && typeof localShowLog !== "boolean") {
         throw new TypeError("showLog must be a boolean");
     }
 
