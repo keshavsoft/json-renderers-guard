@@ -1,0 +1,16 @@
+{
+  "type": "table",
+  "targetHtmlId": "results",
+  "data": [],
+  "columns": [
+    {
+      "columnName": "Name",
+      "width": "150px"
+    },
+    {
+      "columnName": "Designation",
+      "width": "100px"
+    }
+  ],
+  "showLog": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "table",
+  "targetHtmlId": "employee-table",
+  "data": [
+    {
+      "Name": "Keshav"
+    }
+  ],
+  "columns": [
+    {
+      "width": "150px"
+    }
+  ]
+}
