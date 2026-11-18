@@ -3,48 +3,269 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JSON Renderers GUARD documentation — GUARD</title>
+  <title>json-renderers-guard — Documentation</title>
+  <meta name="description" content="Universal, declarative input contracts and schema validation for JSON-driven specification builders. Decoupled validation with zero DOM dependencies.">
+  <link rel="stylesheet" href="styles.css">
   <style>
-    body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}
-    h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}
-    pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}
-    th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}
-    nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}
+    body { background-color: #ffffff; color: #334155; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0 0 60px 0; }
+    .doc-container { max-width: 880px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .header-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; }
+    .brand-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand-badge { background: #eff6ff; color: #2563eb; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .nav-menu { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+    .nav-menu a { color: #334155; text-decoration: none; font-size: 0.92rem; font-weight: 500; padding: 6px 12px; border-radius: 6px; }
+    .nav-menu a:hover, .nav-menu a.active { color: #2563eb; background: #eff6ff; }
+    .nav-menu a.active { font-weight: 600; }
+    .nav-menu .external-link { color: #475569; font-weight: 600; }
+    .nav-menu .npm-link { color: #cb3837; font-weight: 600; }
+    h1 { font-size: 2.2rem; font-weight: 800; color: #0f172a; line-height: 1.25; margin: 0 0 12px 0; }
+    .doc-lead { font-size: 1.15rem; color: #475569; margin-bottom: 24px; line-height: 1.6; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .badge-row img { height: 22px; }
+    h2 { font-size: 1.55rem; font-weight: 700; color: #0f172a; margin: 36px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+    h3 { font-size: 1.2rem; font-weight: 600; color: #0f172a; margin: 24px 0 10px 0; }
+    p { margin: 0 0 16px 0; }
+    ul, ol { margin: 12px 0 20px 24px; }
+    li { margin-bottom: 8px; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    code:not(pre code) { background: #f8fafc; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; border: 1px solid #e2e8f0; }
+    pre { background: #0f172a; color: #f1f5f9; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 18px 0 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px 0; font-size: 0.95rem; background: #ffffff; }
+    th, td { border: 1px solid #e2e8f0; padding: 12px 16px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; color: #0f172a; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafbfd; }
+    .note-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #1e3a8a; }
+    .warning-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #92400e; }
+    footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 0.9rem; color: #64748b; }
   </style>
 </head>
 <body>
-  <header>
-    <p><a href="index.html">json-renderers-guard</a></p>
-    <h1>JSON Renderers GUARD documentation</h1>
-    <p>A shared, versioned place for the input story: what each package expects and how that input is validated.</p>
-    <nav>
-      <a href="index.html">Overview</a>
-      <a href="contracts/columns.html">Column contract</a>
-      <a href="validation/rules.html">Validation rules</a>
-      <a href="examples/table.html">Examples</a>
-      <a href="consumers/migration.html">Consumer migration</a>
-      <a href="npx/index.html"><strong>NPX CLI</strong></a>
-    </nav>
-  </header>
+  <div class="doc-container">
 
-  <h2>Start with the story</h2>
-  <p>A developer chooses a component type, a target HTML ID, a data collection, and a column description. The pipeline divides that input among packages. GUARD makes the validation story discoverable and consistent.</p>
-  <ul>
-    <li><a href="npx/index.html"><strong>NPX CLI</strong>: run without install, generate templates, and validate configs</a></li>
-    <li><a href="overview/why-guard.html">Why GUARD exists</a></li>
-    <li><a href="overview/pipeline.html">How the four repositories fit together</a></li>
-    <li><a href="contracts/columns.html">The column contract: required and optional fields</a></li>
-    <li><a href="validation/rules.html">Validation rules and boundaries</a></li>
-    <li><a href="examples/table.html">Valid and invalid examples</a></li>
-    <li><a href="consumers/migration.html">How consumers adopt GUARD</a></li>
-  </ul>
+    <!-- Single Unified Navigation -->
+    <header class="header-nav">
+      <a href="index.html" class="brand-title">
+        <span>🛡️ json-renderers-guard</span>
+        <span class="brand-badge">v1.5.3</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="active">Overview</a>
+        <a href="page/why-use.html">Why GUARD?</a>
+        <a href="page/how-to-use.html">How to Use</a>
+        <a href="page/examples.html">Examples</a>
+        <a href="npx/index.html">NPX CLI</a>
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="npm-link">NPM ↗</a>
+        <a href="https://github.com/keshavsoft/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="external-link">GitHub ↗</a>
+      </nav>
+    </header>
 
-  <h2>Related repositories</h2>
-  <ul>
-    <li><a href="https://github.com/keshavsoft/json-renderers-build-table">json-renderers-build-table</a></li>
-    <li><a href="https://github.com/keshavsoft/json-renderers-build">json-renderers-build</a></li>
-    <li><a href="https://github.com/keshavsoft/json-renderers">json-renderers</a></li>
-    <li><a href="https://github.com/keshavsoft/json-to-tag">json-to-tag</a></li>
-  </ul>
+    <!-- Main Documentation Content -->
+    <main>
+      <h1>json-renderers-guard</h1>
+      <p class="doc-lead">
+        Universal, declarative input contracts and schema validation for JSON-driven specification builders.
+        Decouples instruction dispatch from component semantics — zero DOM dependencies, pure data transformation.
+      </p>
+
+      <div class="badge-row">
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/npm/v/json-renderers-guard.svg?style=flat-square&color=cb3837" alt="npm version">
+        </a>
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/npm/dm/json-renderers-guard.svg?style=flat-square&color=2563eb" alt="downloads">
+        </a>
+        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="license">
+        </a>
+        <a href="https://keshavsoft.github.io/json-renderers-guard/docs/">
+          <img src="https://img.shields.io/badge/Docs-Live-brightgreen.svg?style=flat-square" alt="docs live">
+        </a>
+      </div>
+
+      <!-- Section: The Story -->
+      <h2>📖 The Story: Why This Exists</h2>
+
+      <h3>The Monolithic Problem</h3>
+      <p>
+        In early declarative architectures, specification builders (such as <code>json-renderers-build-table</code>) were monolithic. The logic that iterated over columns, stamped table headers, computed cells, and mounted elements to the DOM was tightly fused with the instruction execution mechanism.
+      </p>
+      <p>
+        When validation rules and input examples were copied between different repositories, they began to drift. One package might enforce that a column must have a string <code>columnName</code>, while another might silently ignore missing columns, causing unexpected runtime crashes deep inside DOM mutation loops.
+      </p>
+
+      <h3>The Architectural Solution</h3>
+      <p>
+        <code>json-renderers-guard</code> provides <strong>one versioned, centralized contract authority</strong> to validate input objects before any downstream specification builder or DOM renderer processes them:
+      </p>
+      <ul>
+        <li><strong>Pure Data Transformation:</strong> Zero DOM dependency. Runs seamlessly in Node.js, CLI scripts, Web Workers, or browsers.</li>
+        <li><strong>Fail-Fast Boundary:</strong> Rejects invalid types, missing keys, or empty target IDs upfront with clear, actionable errors.</li>
+        <li><strong>Decoupled Pipeline:</strong> Builders focus solely on AST generation, renderers focus on DOM mounting, and GUARD enforces contract integrity.</li>
+      </ul>
+
+      <!-- Section: The Pipeline -->
+      <h2>🧩 The Four-Repository Pipeline</h2>
+      <p>GUARD sits beside the existing renderer packages as a shared boundary perimeter, not as a replacement:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Repository</th>
+            <th>Responsibility</th>
+            <th>Environment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><a href="https://github.com/keshavsoft/json-renderers-guard">json-renderers-guard</a></strong></td>
+            <td>Validates input contracts, schema rules, and field requirements.</td>
+            <td>Pure Data (Node / Browser)</td>
+          </tr>
+          <tr>
+            <td><strong><a href="https://github.com/keshavsoft/json-renderers-build-table">json-renderers-build-table</a></strong></td>
+            <td>Table-specific specification building (AST generation).</td>
+            <td>Pure Data</td>
+          </tr>
+          <tr>
+            <td><strong><a href="https://github.com/keshavsoft/json-renderers-build">json-renderers-build</a></strong></td>
+            <td>Component specification building for multiple UI primitives.</td>
+            <td>Pure Data</td>
+          </tr>
+          <tr>
+            <td><strong><a href="https://github.com/keshavsoft/json-renderers">json-renderers</a></strong></td>
+            <td>Orchestrates lifecycle, manages container mounting, and CSS classes.</td>
+            <td>DOM Mount</td>
+          </tr>
+          <tr>
+            <td><strong><a href="https://github.com/keshavsoft/json-to-tag">json-to-tag</a></strong></td>
+            <td>Translates JSON element specifications into native DOM elements.</td>
+            <td>DOM Native</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Section: Installation & Usage -->
+      <h2>🚀 Installation & Usage</h2>
+      <p>Install via npm:</p>
+      <pre><code>npm install json-renderers-guard</code></pre>
+
+      <h3>Standard End-to-End Validation (guardFunc)</h3>
+      <p>Validates both the specification keys (<code>type</code>, <code>data</code>, <code>columns</code>) and the mount configuration keys (<code>targetHtmlId</code>):</p>
+
+      <pre><code>import guardFunc from "json-renderers-guard";
+
+const tableConfig = {
+  type: "table",
+  targetHtmlId: "users-table-container",
+  data: [
+    { id: 1, name: "Keshav", role: "Architect" },
+    { id: 2, name: "Nalam", role: "Engineer" }
+  ],
+  columns: [
+    { columnName: "name", width: "150px" },
+    { columnName: "role", width: "120px" }
+  ],
+  appendPosition: "replace",
+  showLog: false
+};
+
+// Returns true if valid; throws descriptive TypeError/Error if invalid
+guardFunc(tableConfig);</code></pre>
+
+      <div class="note-box">
+        <strong>Direct &amp; Wrapped Config:</strong> <code>guardFunc</code> accepts the configuration object directly (<code>guardFunc(config)</code>) or wrapped in an input object (<code>guardFunc({ inConfig: config })</code>).
+      </div>
+
+      <!-- Section: Dual-Phase Modular Guards -->
+      <h2>⚡ Dual-Phase Modular Guards</h2>
+      <p>Modern applications often build specifications in headless environments (e.g., server-side rendering or build pipelines) where no DOM element exists yet. GUARD provides dedicated sub-guards for each phase:</p>
+
+      <h3>1. Headless Specification Guard (guardSpec)</h3>
+      <p>Validates data and columns without requiring a <code>targetHtmlId</code>:</p>
+      <pre><code>import { guardSpec } from "json-renderers-guard";
+
+guardSpec({
+  type: "table",
+  data: [{ id: 101, title: "Quarterly Report" }],
+  columns: [{ columnName: "title" }]
+});</code></pre>
+
+      <h3>2. Mount Guard (guardMount)</h3>
+      <p>Validates container target and mounting options prior to DOM attachment:</p>
+      <pre><code>import { guardMount } from "json-renderers-guard";
+
+guardMount({
+  targetHtmlId: "app-root",
+  appendPosition: "replace",
+  classToApply: "table table-striped"
+});</code></pre>
+
+      <!-- Section: Column Contract -->
+      <h2>📋 The Column Contract: Required vs Optional Fields</h2>
+      <p>A column definition is not a free-form universe; it has strict boundary contracts:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Status</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>columnName</code></td>
+            <td><strong>Required</strong></td>
+            <td>Identifies the data key represented by the column. Missing or non-string values are rejected.</td>
+          </tr>
+          <tr>
+            <td><code>width</code></td>
+            <td>Optional</td>
+            <td>Table-specific sizing guideline. Guides column-group/column sizing behavior.</td>
+          </tr>
+          <tr>
+            <td><code>template</code></td>
+            <td>Optional in V1</td>
+            <td>Broader table-level description that can coordinate multiple regions (header, rows, cells, footer).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Section: NPX CLI -->
+      <h2>🛠️ NPX Command Line Interface</h2>
+      <p>GUARD includes a built-in CLI for scaffolding starter templates and validating JSON files without writing code:</p>
+      <pre><code># Output canonical config template to stdout
+npx json-renderers-guard
+
+# Generate a fresh config.json file
+npx json-renderers-guard > config.json
+
+# Validate any local JSON configuration file
+npx json-renderers-guard validate ./my-table.json
+
+# Output complete JSON schema specification
+npx json-renderers-guard --spec</code></pre>
+
+      <!-- Section: Documentation Guides -->
+      <h2>📚 Detailed Documentation Pages</h2>
+      <p>Explore dedicated sub-pages for in-depth guidance:</p>
+      <ul>
+        <li><a href="page/why-use.html"><strong>Why Use GUARD?</strong></a> — Deep dive into the monolithic problem, configuration drift, and boundary design.</li>
+        <li><a href="page/how-to-use.html"><strong>How to Use &amp; Integration Guide</strong></a> — Complete guide covering installation, imports, modular guards, and error handling.</li>
+        <li><a href="page/examples.html"><strong>Practical Examples &amp; Recipes</strong></a> — Real-world table configs, headless data validations, and error catching.</li>
+        <li><a href="npx/index.html"><strong>NPX CLI Guide</strong></a> — Full terminal usage, CI/CD validation, and spec inspection.</li>
+        <li><a href="contracts/columns.html"><strong>Column Contract Details</strong></a> — Granular field requirements and why <code>columnName</code> is mandatory.</li>
+        <li><a href="validation/rules.html"><strong>Validation Rules &amp; Error Boundaries</strong></a> — Complete catalog of validation rules and throw conditions.</li>
+      </ul>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p><strong>json-renderers-guard</strong> • Built by <a href="https://github.com/keshavsoft">KeshavSoft</a>. Distributed under the MIT License.</p>
+    </footer>
+
+  </div>
 </body>
 </html>

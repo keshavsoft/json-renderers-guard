@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practical Examples & Recipes — json-renderers-guard</title>
+  <meta name="description" content="Practical code examples: valid table configs, headless data validation, mount targets, error trapping, and CLI workflows.">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { background-color: #ffffff; color: #334155; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0 0 60px 0; }
+    .doc-container { max-width: 880px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .header-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; }
+    .brand-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand-badge { background: #eff6ff; color: #2563eb; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .nav-menu { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+    .nav-menu a { color: #334155; text-decoration: none; font-size: 0.92rem; font-weight: 500; padding: 6px 12px; border-radius: 6px; }
+    .nav-menu a:hover, .nav-menu a.active { color: #2563eb; background: #eff6ff; }
+    .nav-menu a.active { font-weight: 600; }
+    .nav-menu .external-link { color: #475569; font-weight: 600; }
+    .nav-menu .npm-link { color: #cb3837; font-weight: 600; }
+    h1 { font-size: 2.2rem; font-weight: 800; color: #0f172a; line-height: 1.25; margin: 0 0 12px 0; }
+    .doc-lead { font-size: 1.15rem; color: #475569; margin-bottom: 24px; line-height: 1.6; }
+    h2 { font-size: 1.55rem; font-weight: 700; color: #0f172a; margin: 36px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+    h3 { font-size: 1.2rem; font-weight: 600; color: #0f172a; margin: 24px 0 10px 0; }
+    p { margin: 0 0 16px 0; }
+    ul, ol { margin: 12px 0 20px 24px; }
+    li { margin-bottom: 8px; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    code:not(pre code) { background: #f8fafc; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; border: 1px solid #e2e8f0; }
+    pre { background: #0f172a; color: #f1f5f9; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 18px 0 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px 0; font-size: 0.95rem; background: #ffffff; }
+    th, td { border: 1px solid #e2e8f0; padding: 12px 16px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; color: #0f172a; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafbfd; }
+    .note-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #1e3a8a; }
+    .warning-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #92400e; }
+    footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 0.9rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="doc-container">
+
+    <!-- Single Unified Navigation -->
+    <header class="header-nav">
+      <a href="../index.html" class="brand-title">
+        <span>🛡️ json-renderers-guard</span>
+        <span class="brand-badge">v1.5.3</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="../index.html">Overview</a>
+        <a href="why-use.html">Why GUARD?</a>
+        <a href="how-to-use.html">How to Use</a>
+        <a href="examples.html" class="active">Examples</a>
+        <a href="../npx/index.html">NPX CLI</a>
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="npm-link">NPM ↗</a>
+        <a href="https://github.com/keshavsoft/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="external-link">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Practical Examples & Recipes</h1>
+      <p class="doc-lead">
+        Explore ready-to-use recipes for common validation patterns, modular usage, and handling invalid input payloads.
+      </p>
+
+      <h2>Example 1: Full Valid Table Configuration</h2>
+      <p>A complete, production-ready input object for table generation and rendering:</p>
+
+      <pre><code>import guardFunc from "json-renderers-guard";
+
+const tableConfig = {
+  type: "table",
+  targetHtmlId: "analytics-grid-mount",
+  data: [
+    { id: 101, product: "Widget A", sales: 1200, inStock: true },
+    { id: 102, product: "Widget B", sales: 850, inStock: false },
+    { id: 103, product: "Widget C", sales: 2400, inStock: true }
+  ],
+  columns: [
+    { columnName: "product", width: "180px" },
+    { columnName: "sales", width: "120px" },
+    { columnName: "inStock" }
+  ],
+  appendPosition: "replace",
+  classToApply: "table table-hover table-bordered",
+  showLog: false
+};
+
+// Validates successfully and returns true
+const isValid = guardFunc(tableConfig);
+console.log("Validation result:", isValid); // Output: true</code></pre>
+
+      <h2>Example 2: Headless Data & Columns Validation (guardSpec)</h2>
+      <p>
+        Use this pattern on backend servers, CLI tools, or build scripts where you generate the AST specification without needing any DOM container ID:
+      </p>
+
+      <pre><code>import { guardSpec } from "json-renderers-guard";
+
+const reportSpec = {
+  type: "table",
+  data: [
+    { country: "India", code: "IN", population: "1.4B" },
+    { country: "United States", code: "US", population: "330M" }
+  ],
+  columns: [
+    { columnName: "country" },
+    { columnName: "code" },
+    { columnName: "population" }
+  ],
+  showLog: false
+};
+
+// Succeeds! No targetHtmlId is expected or required.
+guardSpec(reportSpec);
+console.log("Spec data contract verified.");</code></pre>
+
+      <h2>Example 3: Mount Target Validation (guardMount)</h2>
+      <p>Verify container targets, replacement options, and styling rules prior to mounting:</p>
+
+      <pre><code>import { guardMount } from "json-renderers-guard";
+
+const mountConfig = {
+  targetHtmlId: "main-content-area",
+  appendPosition: "replace",
+  classToApply: "custom-responsive-table"
+};
+
+guardMount(mountConfig);
+console.log("Mount target configuration is valid.");</code></pre>
+
+      <h2>Example 4: Catching and Handling Validation Errors</h2>
+      <p>GUARD provides strict, descriptive errors when a contract rule is violated:</p>
+
+      <pre><code>import guardFunc from "json-renderers-guard";
+
+// Case A: Missing targetHtmlId
+try {
+  guardFunc({
+    type: "table",
+    data: [{ item: "Pen" }],
+    columns: [{ columnName: "item" }]
+    // targetHtmlId is missing!
+  });
+} catch (err) {
+  console.error(err.message); 
+  // "targetHtmlId is required and must be a non-empty string"
+}
+
+// Case B: Columns missing required columnName property
+try {
+  guardFunc({
+    type: "table",
+    targetHtmlId: "root",
+    data: [{ item: "Pen" }],
+    columns: [{ width: "100px" }] // columnName is missing!
+  });
+} catch (err) {
+  console.error(err.message);
+  // "Each column object must have a 'columnName' string property"
+}
+
+// Case C: Data is not an array
+try {
+  guardFunc({
+    type: "table",
+    targetHtmlId: "root",
+    data: "invalid data payload", // Must be array
+    columns: [{ columnName: "item" }]
+  });
+} catch (err) {
+  console.error(err.message);
+  // "data must be an array"
+}</code></pre>
+
+      <h2>Example 5: CLI Validation in CI/CD</h2>
+      <p>Validate static fixtures or generated configs during your testing pipeline:</p>
+
+      <pre><code>{
+  "scripts": {
+    "validate:configs": "npx json-renderers-guard validate ./configs/table.json"
+  }
+}</code></pre>
+
+      <p style="margin-top: 30px;">
+        <a href="../npx/index.html"><strong>Next: Check NPX CLI Guide &rarr;</strong></a>
+      </p>
+    </main>
+
+    <footer>
+      <p><strong>json-renderers-guard</strong> • Distributed under MIT License.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

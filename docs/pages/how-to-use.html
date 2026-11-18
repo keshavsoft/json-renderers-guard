@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Use json-renderers-guard — Documentation</title>
+  <meta name="description" content="Step-by-step developer tutorial for integrating json-renderers-guard: full validation, headless guards, fine-grained validators, and error handling.">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    body { background-color: #ffffff; color: #334155; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0 0 60px 0; }
+    .doc-container { max-width: 880px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .header-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; }
+    .brand-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand-badge { background: #eff6ff; color: #2563eb; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .nav-menu { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+    .nav-menu a { color: #334155; text-decoration: none; font-size: 0.92rem; font-weight: 500; padding: 6px 12px; border-radius: 6px; }
+    .nav-menu a:hover, .nav-menu a.active { color: #2563eb; background: #eff6ff; }
+    .nav-menu a.active { font-weight: 600; }
+    .nav-menu .external-link { color: #475569; font-weight: 600; }
+    .nav-menu .npm-link { color: #cb3837; font-weight: 600; }
+    h1 { font-size: 2.2rem; font-weight: 800; color: #0f172a; line-height: 1.25; margin: 0 0 12px 0; }
+    .doc-lead { font-size: 1.15rem; color: #475569; margin-bottom: 24px; line-height: 1.6; }
+    h2 { font-size: 1.55rem; font-weight: 700; color: #0f172a; margin: 36px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+    h3 { font-size: 1.2rem; font-weight: 600; color: #0f172a; margin: 24px 0 10px 0; }
+    p { margin: 0 0 16px 0; }
+    ul, ol { margin: 12px 0 20px 24px; }
+    li { margin-bottom: 8px; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    code:not(pre code) { background: #f8fafc; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; border: 1px solid #e2e8f0; }
+    pre { background: #0f172a; color: #f1f5f9; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 18px 0 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px 0; font-size: 0.95rem; background: #ffffff; }
+    th, td { border: 1px solid #e2e8f0; padding: 12px 16px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; color: #0f172a; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafbfd; }
+    .note-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #1e3a8a; }
+    .warning-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #92400e; }
+    footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 0.9rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="doc-container">
+
+    <!-- Single Unified Navigation -->
+    <header class="header-nav">
+      <a href="../index.html" class="brand-title">
+        <span>🛡️ json-renderers-guard</span>
+        <span class="brand-badge">v1.5.3</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="../index.html">Overview</a>
+        <a href="why-use.html">Why GUARD?</a>
+        <a href="how-to-use.html" class="active">How to Use</a>
+        <a href="examples.html">Examples</a>
+        <a href="../npx/index.html">NPX CLI</a>
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="npm-link">NPM ↗</a>
+        <a href="https://github.com/keshavsoft/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="external-link">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>How to Use json-renderers-guard</h1>
+      <p class="doc-lead">
+        Learn how to install, import, and validate JSON renderer inputs with full, modular, and fine-grained patterns.
+      </p>
+
+      <h2>1. Installation</h2>
+      <p>Install via your package manager of choice:</p>
+      <pre><code>npm install json-renderers-guard</code></pre>
+
+      <h2>2. Standard End-to-End Validation (guardFunc)</h2>
+      <p>
+        The default export <code>guardFunc</code> validates both the data specification keys (<code>type</code>, <code>data</code>, <code>columns</code>) and the mount configuration keys (<code>targetHtmlId</code>):
+      </p>
+
+      <pre><code>import guardFunc from "json-renderers-guard";
+
+const config = {
+  type: "table",
+  targetHtmlId: "customer-table-container",
+  data: [
+    { id: 1, customer: "Acme Corp", revenue: 54000 },
+    { id: 2, customer: "Globex Ltd", revenue: 78000 }
+  ],
+  columns: [
+    { columnName: "customer", width: "200px" },
+    { columnName: "revenue", width: "120px" }
+  ],
+  appendPosition: "replace",
+  showLog: false
+};
+
+try {
+  // Directly pass config or wrap in { inConfig: config }
+  guardFunc(config);
+  console.log("Configuration is valid! Proceeding to render.");
+} catch (error) {
+  console.error("Validation failed:", error.message);
+}</code></pre>
+
+      <div class="note-box">
+        <strong>Return Value:</strong> When valid, <code>guardFunc</code> returns <code>true</code>. If any rule is violated, it throws an immediate descriptive <code>TypeError</code> or <code>Error</code>.
+      </div>
+
+      <h2>3. Headless Specification Validation (guardSpec)</h2>
+      <p>
+        In environments where no DOM target exists—such as Node.js batch scripts, server-side data preparation, or worker threads—use <code>guardSpec()</code>:
+      </p>
+
+      <pre><code>import { guardSpec } from "json-renderers-guard";
+
+const specConfig = {
+  type: "table",
+  data: [{ sku: "X100", stock: 45 }],
+  columns: [{ columnName: "sku" }, { columnName: "stock" }]
+};
+
+// Validates type, data array, column definitions, and logs.
+// targetHtmlId is NOT required here!
+guardSpec(specConfig);</code></pre>
+
+      <h2>4. Mount-Only Validation (guardMount)</h2>
+      <p>
+        If your application has already validated the data model and only needs to verify the DOM container target and presentation options before attaching to the document:
+      </p>
+
+      <pre><code>import { guardMount } from "json-renderers-guard";
+
+guardMount({
+  targetHtmlId: "dashboard-widget-4",
+  appendPosition: "replace",
+  classToApply: "table-striped custom-theme"
+});</code></pre>
+
+      <h2>5. Granular Autonomous Field Validators</h2>
+      <p>
+        For micro-validations inside custom pipelines, each field validator is exported individually:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Validator Function</th>
+            <th>Required Keys / Rules Enforced</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>validateType(config)</code></td>
+            <td>Requires <code>type</code> string. Must not be empty.</td>
+          </tr>
+          <tr>
+            <td><code>validateTargetHtmlId(config)</code></td>
+            <td>Requires <code>targetHtmlId</code> non-empty string.</td>
+          </tr>
+          <tr>
+            <td><code>validateData(config)</code></td>
+            <td>Requires <code>data</code> to be a valid Array.</td>
+          </tr>
+          <tr>
+            <td><code>validateColumns(config)</code></td>
+            <td>Requires <code>columns</code> to be an Array where each item has <code>columnName</code>.</td>
+          </tr>
+          <tr>
+            <td><code>validateShowLog(config)</code></td>
+            <td>Optional. If provided, must be a boolean (<code>true</code> or <code>false</code>).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>6. Using the NPX CLI</h2>
+      <p>
+        You can also run GUARD directly in your terminal or in CI/CD pipelines without importing it:
+      </p>
+
+      <pre><code># Output canonical config template
+npx json-renderers-guard
+
+# Output detailed JSON spec schema
+npx json-renderers-guard --spec
+
+# Validate any local configuration JSON file
+npx json-renderers-guard validate ./my-table.json</code></pre>
+
+      <p style="margin-top: 30px;">
+        <a href="examples.html"><strong>Next: View Practical Examples &rarr;</strong></a>
+      </p>
+    </main>
+
+    <footer>
+      <p><strong>json-renderers-guard</strong> • Distributed under MIT License.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

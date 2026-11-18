@@ -3,49 +3,118 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NPX CLI Usage — GUARD</title>
+  <title>NPX CLI Usage — json-renderers-guard</title>
+  <meta name="description" content="Run GUARD directly from terminal with zero install: scaffold canonical configs, inspect schema, and validate files.">
+  <link rel="stylesheet" href="../styles.css">
   <style>
-    body{max-width:900px;margin:36px auto;padding:0 22px;font:16px/1.65 system-ui,sans-serif;color:#18212b}
-    h1{line-height:1.2}h2{margin-top:30px}a{color:#1459a6}pre,code{background:#f3f6f8;padding:3px 5px}
-    pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;margin:18px 0}
-    th,td{border:1px solid #d8e0e8;padding:9px;text-align:left;vertical-align:top}
-    nav{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}header{border-bottom:1px solid #d8e0e8;padding-bottom:14px}
+    body { background-color: #ffffff; color: #334155; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.7; margin: 0; padding: 0 0 60px 0; }
+    .doc-container { max-width: 880px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+    .header-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; }
+    .brand-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand-badge { background: #eff6ff; color: #2563eb; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 9999px; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .nav-menu { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+    .nav-menu a { color: #334155; text-decoration: none; font-size: 0.92rem; font-weight: 500; padding: 6px 12px; border-radius: 6px; }
+    .nav-menu a:hover, .nav-menu a.active { color: #2563eb; background: #eff6ff; }
+    .nav-menu a.active { font-weight: 600; }
+    .nav-menu .external-link { color: #475569; font-weight: 600; }
+    .nav-menu .npm-link { color: #cb3837; font-weight: 600; }
+    h1 { font-size: 2.2rem; font-weight: 800; color: #0f172a; line-height: 1.25; margin: 0 0 12px 0; }
+    .doc-lead { font-size: 1.15rem; color: #475569; margin-bottom: 24px; line-height: 1.6; }
+    h2 { font-size: 1.55rem; font-weight: 700; color: #0f172a; margin: 36px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+    h3 { font-size: 1.2rem; font-weight: 600; color: #0f172a; margin: 24px 0 10px 0; }
+    p { margin: 0 0 16px 0; }
+    ul, ol { margin: 12px 0 20px 24px; }
+    li { margin-bottom: 8px; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    code:not(pre code) { background: #f8fafc; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; border: 1px solid #e2e8f0; }
+    pre { background: #0f172a; color: #f1f5f9; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 18px 0 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0 28px 0; font-size: 0.95rem; background: #ffffff; }
+    th, td { border: 1px solid #e2e8f0; padding: 12px 16px; text-align: left; vertical-align: top; }
+    th { background: #f8fafc; color: #0f172a; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafbfd; }
+    .note-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #1e3a8a; }
+    .warning-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 20px 0; color: #92400e; }
+    footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 0.9rem; color: #64748b; }
   </style>
 </head>
 <body>
-  <header>
-    <p><a href="../index.html">json-renderers-guard</a></p>
-    <h1>NPX Command Line Interface</h1>
-    <p>Run GUARD directly from your terminal with zero install to get templates, inspect specs, and validate files.</p>
-    <nav>
-      <a href="../index.html">Overview</a>
-      <a href="../contracts/columns.html">Column contract</a>
-      <a href="../validation/rules.html">Validation rules</a>
-      <a href="../examples/table.html">Examples</a>
-      <a href="../consumers/migration.html">Consumer migration</a>
-      <a href="index.html"><strong>NPX CLI</strong></a>
-    </nav>
-  </header>
+  <div class="doc-container">
 
-  <h2>Quick Commands</h2>
-  <table>
-    <thead>
-      <tr><th>Command</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>npx json-renderers-guard</code></td><td>Outputs the canonical JSON configuration template to stdout.</td></tr>
-      <tr><td><code>npx json-renderers-guard &gt; config.json</code></td><td>Creates a fresh, valid config file in your current folder.</td></tr>
-      <tr><td><code>npx json-renderers-guard validate &lt;file&gt;</code></td><td>Validates a JSON configuration file against GUARD rules.</td></tr>
-      <tr><td><code>npx json-renderers-guard --spec</code></td><td>Outputs the raw schema specification object.</td></tr>
-      <tr><td><code>npx json-renderers-guard --help</code></td><td>Displays usage instructions and available options.</td></tr>
-    </tbody>
-  </table>
+    <!-- Single Unified Navigation -->
+    <header class="header-nav">
+      <a href="../index.html" class="brand-title">
+        <span>🛡️ json-renderers-guard</span>
+        <span class="brand-badge">v1.5.3</span>
+      </a>
+      <nav class="nav-menu">
+        <a href="../index.html">Overview</a>
+        <a href="../pages/why-use.html">Why GUARD?</a>
+        <a href="../pages/how-to-use.html">How to Use</a>
+        <a href="../pages/examples.html">Examples</a>
+        <a href="index.html" class="active">NPX CLI</a>
+        <a href="https://www.npmjs.com/package/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="npm-link">NPM ↗</a>
+        <a href="https://github.com/keshavsoft/json-renderers-guard" target="_blank" rel="noopener noreferrer" class="external-link">GitHub ↗</a>
+      </nav>
+    </header>
 
-  <h2>Guides</h2>
-  <ul>
-    <li><a href="generate.html">Generating starter configuration templates</a></li>
-    <li><a href="validate.html">Validating configuration files in CI/CD and CLI</a></li>
-    <li><a href="spec.html">Inspecting specification and piping to tools</a></li>
-  </ul>
+    <main>
+      <h1>NPX Command Line Interface</h1>
+      <p class="doc-lead">
+        Run GUARD directly from your terminal with zero installation to scaffold templates, inspect schemas, and validate configuration files.
+      </p>
+
+      <h2>Quick Command Reference</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Command</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>npx json-renderers-guard</code></td>
+            <td>Outputs the canonical JSON configuration template to stdout.</td>
+          </tr>
+          <tr>
+            <td><code>npx json-renderers-guard &gt; config.json</code></td>
+            <td>Generates a valid starter template file in your current working directory.</td>
+          </tr>
+          <tr>
+            <td><code>npx json-renderers-guard validate &lt;file&gt;</code></td>
+            <td>Validates any target JSON configuration file against GUARD contracts.</td>
+          </tr>
+          <tr>
+            <td><code>npx json-renderers-guard --spec</code></td>
+            <td>Outputs the full JSON specification schema object.</td>
+          </tr>
+          <tr>
+            <td><code>npx json-renderers-guard --help</code></td>
+            <td>Displays CLI usage instructions and available flags.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>1. Generating Starter Templates</h2>
+      <p>Quickly generate a canonical configuration template without writing it from scratch:</p>
+      <pre><code>npx json-renderers-guard > my-table.json</code></pre>
+
+      <h2>2. Validating in CI / CD Pipelines</h2>
+      <p>Ensure JSON fixtures and configuration files are valid before committing or deploying:</p>
+      <pre><code>npx json-renderers-guard validate ./configs/table.json</code></pre>
+      <p>Exits with code <code>0</code> on success (<code>✓ Configuration is valid</code>) or code <code>1</code> on failure.</p>
+
+      <p style="margin-top: 30px;">
+        <a href="../index.html"><strong>&larr; Back to Overview</strong></a>
+      </p>
+    </main>
+
+    <footer>
+      <p><strong>json-renderers-guard</strong> • Distributed under MIT License.</p>
+    </footer>
+
+  </div>
 </body>
 </html>

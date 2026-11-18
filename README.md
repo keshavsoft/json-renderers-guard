@@ -1,60 +1,160 @@
 # json-renderers-guard
 
-Shared input contracts and validation for the JSON-renderer pipeline.
+> Universal, declarative input contracts and schema validation for JSON-driven specification builders.  
+> Decouples instruction dispatch from component semantics — zero DOM, pure data transformation.
 
-## Why this repository exists
+[![npm](https://img.shields.io/npm/v/json-renderers-guard?label=npm&color=cb3837)](https://www.npmjs.com/package/json-renderers-guard)
+[![downloads](https://img.shields.io/npm/dm/json-renderers-guard?label=downloads&color=2563eb)](https://www.npmjs.com/package/json-renderers-guard)
+[![license](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![CDN](https://img.shields.io/badge/CDN-dist%2Fmin.js-orange.svg)](https://cdn.jsdelivr.net/npm/json-renderers-guard)
+[![Live Demo](https://img.shields.io/badge/live-docs-brightgreen.svg)](https://keshavsoft.github.io/json-renderers-guard/docs/)
 
-The input object describes a component's type, target, data, columns, and presentation choices. Different repositories consume different parts of that object. When validation rules and examples are copied between repositories, they can drift. GUARD provides one versioned place to describe and check those inputs without taking over the work of building specifications or DOM elements.
+---
 
-## Related repositories
+## 📖 The Story: Why This Exists
 
-- [json-renderers-build-table](https://github.com/keshavsoft/json-renderers-build-table) — table-specific specification building.
-- [json-renderers-build](https://github.com/keshavsoft/json-renderers-build) — component specification building.
-- [json-renderers](https://github.com/keshavsoft/json-renderers) — rendering orchestration and DOM mounting.
-- [json-to-tag](https://github.com/keshavsoft/json-to-tag) — JSON element specifications to native DOM elements.
+### The Monolithic Problem
 
-GUARD is an additional shared package, not a replacement for any of these projects.
+In early declarative architectures, specification builders (such as `json-renderers-build-table`) were monolithic. The logic that iterated over columns, stamped table headers, computed cells, and mounted elements to the DOM was tightly fused with the instruction execution mechanism.
 
-## V1 contracts
+When validation rules and input examples were copied between different repositories, they began to drift. One package might enforce that a column must have a string `columnName`, while another might silently ignore missing columns, causing unexpected runtime crashes deep inside DOM mutation loops.
 
-- `rendererBuildV19` preserves the build package's checks for supported type, collection data, column objects, required `columnName`, row objects, and a column/data key match.
-- `rendererV17` preserves the renderer's required top-level keys and type checks, including a non-empty `targetHtmlId`.
+### The Architectural Solution
 
-These contracts remain separate because the repositories accept different input shapes.
+`json-renderers-guard` provides **one versioned, centralized contract authority** to validate input objects before any downstream specification builder or DOM renderer processes them:
 
-## Column definition: required and optional fields
+- **Pure Data Transformation**: Zero DOM dependency. Runs seamlessly in Node.js, CLI scripts, Web Workers, or browsers.
+- **Fail-Fast Boundary**: Rejects invalid types, missing keys, or empty target IDs upfront with clear, actionable errors.
+- **Decoupled Pipeline**: Builders focus solely on AST generation, renderers focus on DOM mounting, and GUARD enforces contract integrity.
 
-A column object is not a free-form universe. `columnName` is required because it identifies the data field represented by the column. `width` is optional and table-specific; it guides the table's column-group/column sizing behavior. `template` is optional in the current contract. It is a broader table-level concept than width: a template can describe how multiple table regions—header, rows, cells, and footer—are shaped. It is not mandatory in V1, but may become a required table input in a future contract when that behavior is formalized.
+---
 
-See [docs/contracts/columns.html](docs/contracts/columns.html) for the focused explanation.
+## 🧩 The Four-Repository Pipeline
 
-## Usage
+| Repository                                                                                 | Responsibility                                              | Environment                |
+| :----------------------------------------------------------------------------------------- | :---------------------------------------------------------- | :------------------------- |
+| **[json-renderers-guard](https://github.com/keshavsoft/json-renderers-guard)**             | Shared input contracts and boundary schema validation       | Pure Data (Node / Browser) |
+| **[json-renderers-build-table](https://github.com/keshavsoft/json-renderers-build-table)** | Table-specific AST specification generation                 | Pure Data                  |
+| **[json-renderers-build](https://github.com/keshavsoft/json-renderers-build)**             | Component specification building for multiple UI primitives | Pure Data                  |
+| **[json-renderers](https://github.com/keshavsoft/json-renderers)**                         | Rendering orchestration and DOM mounting                    | DOM Mount                  |
+| **[json-to-tag](https://github.com/keshavsoft/json-to-tag)**                               | Converts JSON tag specs into native DOM elements            | DOM Native                 |
 
-```js
+---
+
+## 📦 Installation
+
+```bash
+# npm
+npm install json-renderers-guard
+
+# pnpm
+pnpm add json-renderers-guard
+
+# yarn
+yarn add json-renderers-guard
+```
+
+---
+
+## ⚡ Quick Start & Usage
+
+### 1. Full Pipeline Validation
+
+```javascript
 import guardFunc from "json-renderers-guard";
 
-guardFunc({
-    inConfig: {
-        type: "table",
-        data: [{ Name: "Keshav" }],
-        columns: [{ columnName: "Name", width: "150px" }],
-        options: {},
-        showLog: false
-    },
-    contractName: "rendererBuildV19"
+const tableConfig = {
+  type: "table",
+  targetHtmlId: "users-table-container",
+  data: [
+    { id: 1, name: "Keshav", role: "Architect" },
+    { id: 2, name: "Nalam", role: "Engineer" },
+  ],
+  columns: [
+    { columnName: "name", width: "150px" },
+    { columnName: "role", width: "120px" },
+  ],
+  appendPosition: "replace",
+  showLog: false,
+};
+
+// Returns true if valid; throws descriptive TypeError/Error if invalid
+guardFunc(tableConfig);
+```
+
+### 2. Dual-Phase Modular Validation
+
+```javascript
+import { guardSpec, guardMount } from "json-renderers-guard";
+
+// 1. Headless specification validation (no targetHtmlId needed)
+guardSpec({
+  type: "table",
+  data: [{ id: 101, title: "Report" }],
+  columns: [{ columnName: "title" }],
+});
+
+// 2. Mount target validation (verifies DOM container ID)
+guardMount({
+  targetHtmlId: "app-root",
+  appendPosition: "replace",
 });
 ```
 
-Valid input returns `true`; invalid input throws an error.
+---
 
-## Documentation
+## 📋 The Column Contract
 
-Start at [docs/index.html](docs/index.html). The documentation is organized by concept rather than placing every page in the root.
+A column definition has strict boundary contracts:
 
-## Versioning
+| Field        | Status         | Purpose                                                                                            |
+| :----------- | :------------- | :------------------------------------------------------------------------------------------------- |
+| `columnName` | **Required**   | Identifies the data key represented by the column. Rejects missing or blank values.                |
+| `width`      | Optional       | Table-specific sizing guideline for column-group/column width behavior.                            |
+| `template`   | Optional in V1 | Broader table-level description coordinating multiple table regions (header, rows, cells, footer). |
 
-This first package contains V1 only. Do not create V2 or V3 until a real subsequent implementation needs to be preserved.
+---
 
-## Tests
+## 🛠️ NPX Command Line Interface
 
-Run `npm test`. These are package unit tests; the two consuming repositories still need their own builds and integration tests after installing this package.
+```bash
+# Output canonical config template to stdout
+npx json-renderers-guard
+
+# Scaffold fresh config.json
+npx json-renderers-guard > config.json
+
+# Validate any local JSON configuration file
+npx json-renderers-guard validate ./my-table.json
+
+# Output complete JSON schema specification
+npx json-renderers-guard --spec
+```
+
+---
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`docs/`](docs/index.html) directory and online:
+
+- 📖 **[Documentation Home](https://keshavsoft.github.io/json-renderers-guard/docs/)**
+- ❓ **[Why Use GUARD?](https://keshavsoft.github.io/json-renderers-guard/docs/page/why-use.html)** — The architectural story and solving configuration drift.
+- 🚀 **[How to Use](https://keshavsoft.github.io/json-renderers-guard/docs/page/how-to-use.html)** — Step-by-step developer tutorial, modular APIs, and error handling.
+- 💡 **[Examples & Recipes](https://keshavsoft.github.io/json-renderers-guard/docs/page/examples.html)** — Real-world table configs and edge-case demos.
+- ⚙️ **[NPX CLI Guide](https://keshavsoft.github.io/json-renderers-guard/docs/npx/index.html)** — Terminal workflows and CI validation.
+
+---
+
+## 🧪 Testing
+
+```bash
+npm test
+```
+
+Executes built-in Node.js test runner covering autonomous field validators, modular guards, and CLI commands.
+
+---
+
+## 📄 License
+
+MIT © KeshavSoft
